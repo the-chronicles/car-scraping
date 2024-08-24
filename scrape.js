@@ -4,7 +4,6 @@ const XLSX = require("xlsx");
 
 (async () => {
   const browser = await puppeteer.launch({ headless: false, timeout: 120000 });
-  args: ["--no-sandbox", "--disable-setuid-sandbox"],
   console.log("Browser launched");
 
   // console.log("Chromium executable path:", browser.process().spawnfile);
