@@ -21,7 +21,7 @@ const XLSX = require("xlsx");
   await page.click(".form__button-submit");
 
   await page.waitForNavigation({ waitUntil: "networkidle2" });
-  console.log("Logged in and navigated to the main page");
+  console.log("Logged in and navigated to the main page!");
 
   // Function to scrape vehicle data
   async function scrapeVehicleData(vehiclePage) {
