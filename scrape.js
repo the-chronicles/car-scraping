@@ -11,7 +11,7 @@ const XLSX = require("xlsx");
   console.log("New page created");
 
   // Navigate to the auction page
-  await page.goto("https://www.carstrucksandboats.com/events/3016", {
+  await page.goto("https://www.carstrucksandboats.com/events/3023", {
     waitUntil: "networkidle2",
   });
 
