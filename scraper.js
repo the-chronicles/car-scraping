@@ -20,13 +20,39 @@ const XLSX = require("xlsx");
 
   // Function to scrape vehicle data
   async function scrapeVehicleData(vehiclePage) {
-    await vehiclePage.waitForSelector(".vehicle__title");
+    // await vehiclePage.waitForSelector(".vehicle__title");
+    // const vehicleData = await vehiclePage.evaluate(() => {
+    //   const data = {};
+    //   data.title = document.querySelector(".vehicle__title").innerText;
+    //   data.reserve = document.querySelector(".vehicle__options-bidding").innerText;
+    //   data.vehiclebid = document.querySelector(".vehicle__bids .vehicle__bid").innerText;
+    //   data.info = document.querySelector(".vehicle__options-row").innerText;
+    //   return data;
+    // });
+
+
     const vehicleData = await vehiclePage.evaluate(() => {
       const data = {};
+      
+      // Extract title
       data.title = document.querySelector(".vehicle__title").innerText;
-      data.reserve = document.querySelector(".vehicle__options-bidding").innerText;
-      data.vehiclebid = document.querySelector(".vehicle__bids .vehicle__bid").innerText;
-      data.info = document.querySelector(".vehicle__options-row").innerText;
+      
+      // Extract reserve and bid information
+      const reserveStatus = document.querySelector(".vehicle__options-bidding strong")?.innerText || "No Reserve Info";
+      const bidCountElement = document.querySelector(".vehicle__options-bidding span span")?.innerText || "0";
+      const bids = parseInt(bidCountElement.trim(), 10); // Get the number of bids
+  
+      // Check if there are any bids
+      if (bids === 0) {
+        data.reserve = "No Bids";
+      } else {
+        data.reserve = reserveStatus.includes("Reserve Not Met") ? "Reserve Not Met" : "Reserve Met";
+      }
+  
+      // Extract bid amount
+      data.vehiclebid = document.querySelector(".vehicle__bids .vehicle__bid")?.innerText || "No Bid Info";
+      data.info = document.querySelector(".vehicle__options-row")?.innerText || "No Vehicle Info";
+  
       return data;
     });
 
